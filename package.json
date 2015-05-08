@@ -1,0 +1,26 @@
+{
+	"author": "Ilya Shatokhin <eXamp1e@mail.ru>",
+	"name": "node-arc-cache",
+	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/ex1st/node-arc-cache.git"
+	},
+	"contributors": [
+		{
+			"name": "Ilya Shatokhin",
+			"email": "eXamp1e@mail.ru"
+		}
+	],
+	"main": "./lib/arc",
+	"engines": {
+		"node": ">= v0.8.x"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"mocha": ""
+	},
+	"scripts": {
+		"test": "mocha -bR spec ./test/test.js"
+	}
+}
