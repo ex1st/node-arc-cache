@@ -1,31 +1,31 @@
-"use strict";
+'use strict';
 
 var assert = require('assert'),
 	ARC = require('../lib/arc.js'),
 	storage;
 
-describe("ARC",function () {
-	it("simple init", function () {
+describe('ARC', function() {
+	it('simple init', function() {
 		storage = new ARC();
-		assert.equal(storage.max,		Infinity);
+		assert.equal(storage.max,	Infinity);
 		assert.equal(storage.maxAge,	null);
 		assert.equal(storage.length,	0);
-	})
-	it("number init", function () {
+	});
+	it('number init', function() {
 		storage = new ARC(3);
-		assert.equal(storage.max,		3);
+		assert.equal(storage.max,	3);
 		assert.equal(storage.maxAge,	null);
 		assert.equal(storage.length,	0);
-	})
-	it("options init", function () {
-		storage = ARC({max: 10, maxAge: 10000, length: function (n) { return n*2; }});
+	});
+	it('options init', function() {
+		storage = ARC({max: 10, maxAge: 10000, length: function(n) { return n * 2; }});
 		storage.set(1, 1);
 
-		assert.equal(storage.max,		10);
+		assert.equal(storage.max,	10);
 		assert.equal(storage.maxAge,	10000);
 		assert.equal(storage.length,	2);
-	})
-	it("itemCount", function () {
+	});
+	it('itemCount', function() {
 		storage = ARC({max: 3});
 
 		storage.set(1, 3);
@@ -41,8 +41,8 @@ describe("ARC",function () {
 
 		storage.set(3, 3);
 		assert.equal(storage.itemCount,	3);
-	})
-	it("set/get", function () {
+	});
+	it('set/get', function() {
 		storage = ARC();
 
 		storage.set(1, 3);
@@ -66,62 +66,62 @@ describe("ARC",function () {
 		assert.equal(storage.get(2), undefined);
 		assert.equal(storage.get(3), 3);
 		assert.equal(storage.get(4), 2);
-	})
-	it("expair", function (done) {
+	});
+	it('expair', function(done) {
 		storage = new ARC({maxAge: 10});
 
 		storage.set(1, 1);
 		assert.equal(storage.get(1), 1);
 
-		setTimeout(function () {
+		setTimeout(function() {
 			assert.equal(storage.get(1), 1);
 
-			setTimeout(function () {
+			setTimeout(function() {
 				assert.equal(storage.get(1), undefined);
 
 				done();
-			}, 11)
+			}, 12);
 		}, 5);
-	})
-	it("delete", function () {
+	});
+	it('delete', function() {
 		storage = new ARC({max: 10});
 
 		var i = 10;
-		while(--i) {
+		while (--i) {
 			storage.set(i);
 		}
 
 		i = 10;
-		while(--i) {
+		while (--i) {
 			storage.del(i);
 			assert.equal(storage.get(i), undefined);
 		}
 
 		assert.equal(storage.itemCount, 0);
-	})
-	it("forEach", function (done) {
+	});
+	it('forEach', function(done) {
 		storage = ARC({maxAge: 10});
 
 		storage.set(1, 4);
 		storage.set(2, 3);
-		setTimeout(function () {
+		setTimeout(function() {
 			storage.set(3, 2);
 			storage.set(4, 1);
 
-			setTimeout(function () {
+			setTimeout(function() {
 				var arr = [];
 
-				storage.forEach(function (n) {
+				storage.forEach(function(n) {
 					arr.push(n);
 				});
 
-				assert.equal(arr.sort().join(","), [1,2].join(","));
+				assert.equal(arr.sort().join(','), [1, 2].join(','));
 
 				done();
 			}, 5);
 		}, 5);
-	})
-	it("keys", function (done) {
+	});
+	it('keys', function(done) {
 		storage = new ARC({max: 2});
 
 		storage.set(1, 4);
@@ -129,13 +129,13 @@ describe("ARC",function () {
 		storage.set(3, 2);
 		storage.set(4, 1);
 
-		assert.equal(storage.keys().sort().join(","), [3,4].join(","));
+		assert.equal(storage.keys().sort().join(','), [1, 2].join(','));
 		storage.max = 4;
 
-		storage.set(1, 4);
-		storage.set(2, 3);
+		storage.set(3, 2);
+		storage.set(4, 1);
 
-		assert.equal(storage.keys().sort().join(","), [1,2,3,4].join(","));
+		assert.equal(storage.keys().sort().join(','), [1, 2, 3, 4].join(','));
 
 		storage.get(1);
 		storage.get(2); storage.get(2);
@@ -143,11 +143,11 @@ describe("ARC",function () {
 		storage.get(4);
 
 		storage.max = 2;
-		assert.equal(storage.keys().sort().join(","), [2,3].join(","));
+		assert.equal(storage.keys().sort().join(','), [2, 3].join(','));
 
 		done();
-	})
-	it("values", function (done) {
+	});
+	it('values', function(done) {
 		storage = new ARC({max: 2});
 
 		storage.set(1, 4);
@@ -155,13 +155,13 @@ describe("ARC",function () {
 		storage.set(3, 2);
 		storage.set(4, 1);
 
-		assert.equal(storage.values().sort().join(","), [1,2].join(","));
+		assert.equal(storage.values().sort().join(','), [3, 4].join(','));
 		storage.max = 4;
 
-		storage.set(1, 4);
-		storage.set(2, 3);
+		storage.set(3, 2);
+		storage.set(4, 1);
 
-		assert.equal(storage.values().sort().join(","), [1,2,3,4].join(","));
+		assert.equal(storage.values().sort().join(','), [1, 2, 3, 4].join(','));
 
 		storage.get(1); storage.get(1);
 		storage.get(2);
@@ -169,22 +169,27 @@ describe("ARC",function () {
 		storage.get(4); storage.get(4);
 
 		storage.max = 2;
-		assert.equal(storage.values().sort().join(","), [1,4].join(","));
+		assert.equal(storage.values().sort().join(','), [1, 4].join(','));
 
 		done();
-	})
-	it("reset", function () {
-		var i = 100001,
+	});
+	it('reset', function(done) {
+		var i = 1000000,
+			s = i / 10,
 			e = 0;
 
-		storage = new ARC({max: i});
+		storage = new ARC({max: s});
 
 		while (i) {
+			storage.get(i % 2);
 			storage.set(--i, ++e);
+			storage.has(i % 2);
+			storage.set(i % 2, e);
 		}
 
-		assert.equal(storage.itemCount,	e);
+		assert.equal(storage.itemCount, s);
 		storage.reset();
 		assert.equal(storage.itemCount,	0);
-	})
-})
+		done();
+	});
+});
