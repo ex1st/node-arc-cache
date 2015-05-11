@@ -70,17 +70,20 @@ describe('ARC', function() {
 	it('expair', function(done) {
 		storage = new ARC({maxAge: 10});
 
+		var d = new Date();
 		storage.set(1, 1);
 		assert.equal(storage.get(1), 1);
 
 		setTimeout(function() {
 			assert.equal(storage.get(1), 1);
+			assert.equal(storage.info(1).created.toDateString(), d.toDateString());
+			assert.equal(storage.info(1).expire.toDateString(), new Date(d.valueOf() + 10).toDateString());
 
 			setTimeout(function() {
 				assert.equal(storage.get(1), undefined);
 
 				done();
-			}, 12);
+			}, 6);
 		}, 5);
 	});
 	it('expair custom maxAge', function(done) {
