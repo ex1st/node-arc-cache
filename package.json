@@ -1,7 +1,7 @@
 {
 	"author": "Ilya Shatokhin <eXamp1e@mail.ru>",
 	"name": "arc-cache",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/ex1st/node-arc-cache.git"

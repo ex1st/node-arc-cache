@@ -18,7 +18,7 @@ describe("ARC",function () {
 		assert.equal(storage.length,	0);
 	})
 	it("options init", function () {
-		storage = ARC({max: 10, maxAge: 10000, length: function () {return 2;}});
+		storage = ARC({max: 10, maxAge: 10000, length: function (n) { return n*2; }});
 		storage.set(1, 1);
 
 		assert.equal(storage.max,		10);
@@ -82,6 +82,22 @@ describe("ARC",function () {
 				done();
 			}, 11)
 		}, 5);
+	})
+	it("delete", function () {
+		storage = new ARC({max: 10});
+
+		var i = 10;
+		while(--i) {
+			storage.set(i);
+		}
+
+		i = 10;
+		while(--i) {
+			storage.del(i);
+			assert.equal(storage.get(i), undefined);
+		}
+
+		assert.equal(storage.itemCount, 0);
 	})
 	it("forEach", function (done) {
 		storage = ARC({maxAge: 10});
