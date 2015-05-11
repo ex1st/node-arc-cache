@@ -173,9 +173,9 @@ describe('ARC', function() {
 
 		done();
 	});
-	it('reset', function(done) {
+	it('reset', function() {
 		var i = 1000000,
-			s = i / 10,
+			s = i / 100,
 			e = 0;
 
 		storage = new ARC({max: s});
@@ -190,6 +190,5 @@ describe('ARC', function() {
 		assert.equal(storage.itemCount, s);
 		storage.reset();
 		assert.equal(storage.itemCount,	0);
-		done();
 	});
 });
