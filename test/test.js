@@ -83,6 +83,22 @@ describe('ARC', function() {
 			}, 12);
 		}, 5);
 	});
+	it('expair custom maxAge', function(done) {
+		storage = new ARC({maxAge: 10});
+
+		storage.set(1, 1);
+		storage.set(2, 2, 15);
+
+		setTimeout(function() {
+			assert.equal(storage.get(1), undefined);
+			assert.equal(storage.get(2), 2);
+
+			setTimeout(function() {
+				assert.equal(storage.get(2), undefined);
+				done();
+			}, 5);
+		}, 11);
+	});
 	it('delete', function() {
 		storage = new ARC({max: 10});
 
